@@ -47,11 +47,13 @@ function saveData(block, account, data, type){
   //botClient.sendAlarm(account, fData);
  /* Temporary disable saving data to MongoDB due to the size limit
  after find one and if available then save */
+	console.log("calling saveData for account");
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dtfpf2m1");
 		var findquery = {eosid : account, report : false};
 		dbo.collection("customers").findOne(findquery, function(err, result){
 			if(result == null){
+				console.log("there is no matched one ", account);
 				db.close();
 			}else{
 				//insert data
@@ -59,6 +61,7 @@ function saveData(block, account, data, type){
 				var myobj = { block : block, account : account, data : fData, report : false };
 				dbo.collection("alarm").insertOne(myobj, function(err, res){
 					if (err) throw err;
+					console.log("one document inserted to alarm db ", account);
 					db.close();
 				});
 			}
