@@ -48,7 +48,7 @@ function saveData(block, account, data, type){
  /* Temporary disable saving data to MongoDB due to the size limit
  after find one and if available then save */
 	MongoClient.connect(url, function(err, db) {
-		var dbo = db.db("heroku_9472rtd6");
+		var dbo = db.db("heroku_dtfpf2m1");
 		var findquery = {eosid : account, report : false};
 		dbo.collection("customers").findOne(findquery, function(err, result){
 			if(result == null){
