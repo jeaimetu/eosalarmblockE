@@ -29,6 +29,8 @@ function getLatestBlock(){
   if(previousReadBlock <  startIndex){
    //idx = startIndex;
    //read block
+    console.log("Memory heap usage ", process.memoryUsage().heapTotal/(1024*1024));
+ 	console.log("Memory rss usage ", process.memoryUsage().rss/(1024*1024));
    console.log("callong saveBlockInfo for block number", startIndex);
    saveBlockInfo(startIndex);
   }else{
@@ -40,22 +42,28 @@ function getLatestBlock(){
 }
 
 
-function saveData(block, account, data, type){
-  var fData = formatData(data, type);
-  botClient.sendAlarm(account, fData);
+function saveData(block, account, data, type){ 
+  //var fData = formatData(data, type);
+  //botClient.sendAlarm(account, fData);
  /* Temporary disable saving data to MongoDB due to the size limit
-  MongoClient.connect(url, function(err, db) {
-   var dbo = db.db("heroku_9472rtd6");
-   var fData = formatData(data, type);
-   botClient.sendAlarm(account, fData);
-   var myobj = { block : block, account : account, data : fData, report : false };
-   dbo.collection("alarm").insertOne(myobj, function(err, res){
-    if (err) throw err;
-    //console.log("1 document inserted");
-    db.close();   
-   });
-  }); 
-  */
+ after find one and if available then save */
+	MongoClient.connect(url, function(err, db) {
+		var dbo = db.db("heroku_9472rtd6");
+		var findquery = {eosid : account, report : false};
+		dbo.collection("customers").findOne(findquery, function(err, result){
+			if(result == null){
+				db.close();
+			}else{
+				//insert data
+				var fData = formatData(data, type);
+				var myobj = { block : block, account : account, data : fData, report : false };
+				dbo.collection("alarm").insertOne(myobj, function(err, res){
+					if (err) throw err;
+					db.close();
+				});
+			}
+		});
+	}); 
 }
  
 function checkAccount(result){
