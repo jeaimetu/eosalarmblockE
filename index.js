@@ -1,6 +1,6 @@
-require('./bot');
-require('./eos');
-require('./price');
+//require('./bot');
+//require('./eos');
+//require('./price');
 //require('./blockParse');
 var http = require('http'); 
 
