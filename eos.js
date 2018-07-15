@@ -1,6 +1,7 @@
 var Eos = require('eosjs') // Eos = require('./src')
 var blockParse = require('./blockParse.js');
 
+var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
 const chainLogging = false;
