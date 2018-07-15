@@ -50,7 +50,7 @@ function saveData(block, account, data, type){
 	console.log("calling saveData for account");
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dtfpf2m1");
-		var findquery = {eosid : account, report : false};
+		var findquery = {eosid : account};
 		dbo.collection("customers").findOne(findquery, function(err, result){
 			if(result == null){
 				console.log("there is no matched one ", account);
