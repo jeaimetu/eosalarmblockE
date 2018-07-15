@@ -51,19 +51,22 @@ function saveData(block, account, data, type){
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dtfpf2m1");
 		var findquery = {eosid : account};
-		dbo.collection("customers").findOne(findquery, function(err, result){
+		dbo.collection("customers").find(findquery).toArray(function(err, result){
 			if(result == null){
 				console.log("there is no matched one ", account);
 				db.close();
 			}else{
-				//insert data
-				var fData = formatData(data, type);
-				var myobj = { block : block, account : account, data : fData, report : false };
-				dbo.collection("alarm").insertOne(myobj, function(err, res){
-					if (err) throw err;
-					console.log("one document inserted to alarm db ", account);
-					db.close();
-				});
+				for(i = 0;i < result.length;i++){
+					//insert data
+					var fData = formatData(data, type);
+					//query all chat ids related to this
+					var myobj = { chatid : result[i].chatid block : block, account : account, data : fData, report : false };
+					dbo.collection("alarm").insertOne(myobj, function(err, res){
+						if (err) throw err;
+							console.log("one document inserted to alarm db ", account);
+						db.close();
+					});
+				}
 			}
 		});
 	}); 
