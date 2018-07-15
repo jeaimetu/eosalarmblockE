@@ -1,7 +1,6 @@
 var Eos = require('eosjs') // Eos = require('./src')
 var blockParse = require('./blockParse.js');
 
-var botClient = require('./bot.js');
 var url = process.env.MONGODB_URI;
 
 const chainLogging = false;
