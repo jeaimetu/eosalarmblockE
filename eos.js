@@ -118,10 +118,7 @@ function checkAccount(result){
   
   			if(account != null && type != "ddos" && type != "tweet"){     
    				//console.log("calling sendalarm in eosjs", account);
-   				//saveData(result.block_num, account, data, type);
-      //change to direct to call to save memory
-       var fData = formatData(data, type);
-       botClient.sendAlarm(account, fData);
+   				saveData(result.block_num, account, data, type);
    				account = null;
  			  }//end of if
    		}//end of for, actions
