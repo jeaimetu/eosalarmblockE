@@ -1,19 +1,19 @@
 function getAccountInfo(data){
  let account = null;
  
- if(("to" in data) == 0)
+ if(data.hasOwnProperty(to))
   account = data.to;
- if(("from" in data) == 0)
+ if(data.hasOwnProperty(from))
   account = data.from;
- if(("account" in data) == 0)
+ if(data.hasOwnProperty(account))
   account = data.account;
- if(("owner" in data) == 0)
+ if(data.hasOwnProperty(owner))
   account = data.owner;
- if(("voter" in data) == 0)
+ if(data.hasOwnProperty(voter))
   account = data.voter;
- if(("receiver" in data) == 0)
+ if(data.hasOwnProperty(receiver))
   account = data.receiver;
- if(("poster" in data) == 0)
+ if(data.hasOwnProperty(poster))
   account = data.poster;
  
  return account; 
@@ -22,4 +22,3 @@ function getAccountInfo(data){
 
 //Exporting functions
 module.exports.getAccountInfo = getAccountInfo;
-
