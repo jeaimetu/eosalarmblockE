@@ -87,7 +87,7 @@ function checkAccount(result){
    		for(j=0;j<trx.actions.length;j++){
     			if(chainLogging == true)
     				console.log("action length", trx.actions.length);
-    			if(trx.actions[j] !=  undefined && trx.actions[j].length != 0)
+    			if(trx.actions[j] ==  undefined || trx.actions[j].length == 0)
      				continue;    
   				var type = trx.actions[j].name;
   				var data = trx.actions[j].data; 
