@@ -79,11 +79,13 @@ function checkAccount(result){
  }else{
  	if(chainLogging == true)
   		console.log("transaction length ", result.transactions.length);
+	if(result.transactions == undefined || result.transactions.length == 0)
+		return;
   	for(i = 0;i<result.transactions.length;i++){
   	//check transaction type
   		var trx = result.transactions[i].trx.transaction;
-  		if(trx == undefined)
-   			continue;
+		if(trx.actions == null || trx.actions.length == 0)
+			return;
    		for(j=0;j<trx.actions.length;j++){
     			if(chainLogging == true)
     				console.log("action length", trx.actions.length);
