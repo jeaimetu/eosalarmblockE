@@ -76,7 +76,8 @@ function saveData(block, account, data, type){
  
 function checkAccount(result){
    //idx++;
-	console.log("checkAccount", result);
+	if(chainLogging == true)
+		console.log("checkAccount", result);
  if(result.transactions.length == 0){
  	return;
  }else{
