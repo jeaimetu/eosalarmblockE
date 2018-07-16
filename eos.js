@@ -54,6 +54,7 @@ function saveData(block, account, data, type){
 		dbo.collection("customers").find(findquery).toArray(function(err, result){
 			if(result == null){
 				console.log("there is no matched one ", account);
+				  setTimeout(getLatestBlock, runTimer);
 				db.close();
 			}else{
 				for(i = 0;i < result.length;i++){
@@ -66,6 +67,7 @@ function saveData(block, account, data, type){
 					dbo.collection("alarm").insertOne(myobj, function(err, res){
 						if (err) throw err;
 							console.log("one document inserted to alarm db ", account);
+						  setTimeout(getLatestBlock, runTimer);
 						db.close();
 					});
 				}
@@ -89,6 +91,8 @@ function checkAccount(result){
   	for(i = 0;i<result.transactions.length;i++){
   	//check transaction type
   		var trx = result.transactions[i].trx.transaction;
+		if(trx === undefined)
+			continue;
 		if(trx.actions === null || trx.actions.length == 0 || trx.actions === undefined)
 			continue;
    		for(j=0;j<trx.actions.length;j++){
@@ -148,7 +152,7 @@ function saveBlockInfo(idx){
   //saving the latest success block number.
   previousReadBlock = idx;
   idx++;
-  setTimeout(getLatestBlock, runTimer);
+
   })
  .catch((err) => {
 
