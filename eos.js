@@ -237,7 +237,20 @@ function formatData(data, type){
  return msg;
  
 }
+
+function deleteReportedAlarm(){
+	MongoClient.connect(url, function(err, db) {
+		var dbo = db.db("heroku_9472rtd6");
+		var findquery = {report  : true};
+		dbo.collection("alarm").deleteMany(findquery, function(err, obj) {
+			if (err) throw err;
+			console.log("reported alarm deleted");
+			db.close();
+		});
+	});	
+}
                         
- setTimeout(getLatestBlock, runTimer);
+setTimeout(getLatestBlock, runTimer);
+setInterval(deleteReportedAlarm, 3600000); //per an hour, delete reported alarm
 
 
