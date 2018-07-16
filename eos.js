@@ -88,47 +88,43 @@ function checkAccount(result){
     			if(chainLogging == true)
     				console.log("action length", trx.actions.length);
     			if(trx.actions[j] ==  undefined && trx.actions[j].length != 0)
-     				continue;
-    
-  			var type = trx.actions[j].name;
-  			var data = trx.actions[j].data; 
-      //filtering malicious event
-      if(type == "ddos" || type == "tweet")
-       continue;
-  			var account = null;
-  			if(type == "transfer" || type == "issue" ){
-  				account = data.to;
-  			}else if(type == "newaccount"){
-  				account = data.creator;
-  			}else if(type == "voteproducer"){
-  				account = data.voter;  
-  			}else if(type == "undelegatebw" || type == "delegatebw"){
-  				account = data.from;
-  			}else if(type == "ddos"){
-  				account = trx.actions[0].account;
-  			}else if(type == "bidname"){
-  				account = data.bidder;
-  			}else if(type == "awakepet" || type == "feedpet" || type == "createpet"){
-  				account = trx.actions[j].authorization[0].actor;
-  			}else if(type == "refund"){
-  				account = data.owner;
-  			}else if(type == "buyram"){
-  				account = data.payer;
-  			}else if(type == "sellram" || type == "updateauth"){
-  				account = data.account;
-  			}else{
-   				;
-      
-      account = blockParse.getAccountInfo(data);
-      
-  			}//end of else
+     				continue;    
+  				var type = trx.actions[j].name;
+  				var data = trx.actions[j].data; 
+      			//filtering malicious event
+      			if(type == "ddos" || type == "tweet")
+       				continue;
+  				var account = null;
+  				if(type == "transfer" || type == "issue" ){
+  					account = data.to;
+  				}else if(type == "newaccount"){
+  					account = data.creator;
+  				}else if(type == "voteproducer"){
+  					account = data.voter;  
+  				}else if(type == "undelegatebw" || type == "delegatebw"){
+  					account = data.from;
+  				}else if(type == "ddos"){
+  					account = trx.actions[0].account;
+  				}else if(type == "bidname"){
+  					account = data.bidder;
+  				}else if(type == "awakepet" || type == "feedpet" || type == "createpet"){
+  					account = trx.actions[j].authorization[0].actor;
+  				}else if(type == "refund"){
+  					account = data.owner;
+  				}else if(type == "buyram"){
+  					account = data.payer;
+  				}else if(type == "sellram" || type == "updateauth"){
+  					account = data.account;
+  				}else{      
+      				account = blockParse.getAccountInfo(data);    
+  				}//end of else
   
-  			if(account != null && type != "ddos" && type != "tweet"){     
-   				//console.log("calling sendalarm in eosjs", account);
-   				saveData(result.block_num, account, data, type);
-   				account = null;
- 			  }//end of if
-   		}//end of for, actions
+  				if(account != null && type != "ddos" && type != "tweet"){     
+   					//console.log("calling sendalarm in eosjs", account);
+   					saveData(result.block_num, account, data, type);
+   					account = null;
+ 			  	}//end of if
+   			}//end of for, actions
  	}//end of for of transaction
  }//end of else 
 }//end of function
