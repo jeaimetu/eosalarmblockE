@@ -81,11 +81,13 @@ function checkAccount(result){
 	if(chainLogging == true)
 		console.log("checkAccount", result);
  if(result.transactions.length == 0){
+	 setTimeout(getLatestBlock, runTimer);
  	return;
  }else{
  	if(chainLogging == true)
   		console.log("transaction length ", result.transactions.length);
 	if(result.transactions === undefined || result.transactions.length == 0){
+		setTimeout(getLatestBlock, runTimer);
 		return;
 	}
   	for(i = 0;i<result.transactions.length;i++){
