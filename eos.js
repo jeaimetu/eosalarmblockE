@@ -16,7 +16,7 @@ eosconfig = {
 eos = EosApi(eosconfig)
 
 // Getting starting block id
-var isFirstRun == true;
+var isFirstRun = true;
 var idx = 0;
 var previousReadBlock = -1;
 
