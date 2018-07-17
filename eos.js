@@ -10,7 +10,8 @@ const runTimer = 200;
 // EOS
 EosApi = require('eosjs-api')
 eosconfig = {
- httpEndpoint: "https://mainnet.eoscalgary.io"
+ 	httpEndpoint: "https://mainnet.eoscalgary.io",
+	expireInSeconds: 60	
 }
 
 eos = EosApi(eosconfig)
