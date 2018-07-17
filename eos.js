@@ -54,7 +54,7 @@ function saveData(block, account, data, type){
   //botClient.sendAlarm(account, fData);
  /* Temporary disable saving data to MongoDB due to the size limit
  after find one and if available then save */
-	console.log("calling saveData for account");
+	console.log("calling saveData for account", account);
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_9472rtd6");
 		var findquery = {eosid : account};
