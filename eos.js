@@ -236,7 +236,7 @@ function formatData(data, type){
   }else if(type == "buyram" || type == "buyrambytes"){
    msg = "You buy RAM";
    msg += "\n";
-   msg += "Amount " + data.quant + " to " + data.receiver;
+   msg += "Amount " + data.bytes + " to " + data.receiver;
   }else{
    //console.log("need to be implemented");
    msg = "This event will be supported in near future";
