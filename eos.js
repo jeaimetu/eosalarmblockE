@@ -21,7 +21,7 @@ var isFirstRun = true;
 
 var previousReadBlock = -1;
 
-function forceGC()
+function forceGC(){
    if (global.gc) {
       global.gc();
    } else {
