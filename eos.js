@@ -34,7 +34,7 @@ function getLatestBlock(){
    console.log("callong saveBlockInfo for block number", startIndex);
    saveBlockInfo(startIndex);
   }else{
-   setTimeout(getLatestBlock, runTimer);
+
    if(chainLogging == true)
     console.log("Do nothing", "previousReadBlock", "startIndex", "idx",previousReadBlock,startIndex) ;//do nothing
   }
@@ -54,7 +54,7 @@ function saveData(block, account, data, type){
 		dbo.collection("customers").find(findquery).toArray(function(err, result){
 			if(result == null){
 				console.log("there is no matched one ", account);
-				  setTimeout(getLatestBlock, runTimer);
+				  
 				db.close();
 			}else{
 				for(i = 0;i < result.length;i++){
@@ -67,7 +67,7 @@ function saveData(block, account, data, type){
 					dbo.collection("alarm").insertOne(myobj, function(err, res){
 						if (err) throw err;
 							console.log("one document inserted to alarm db ", account);
-						  setTimeout(getLatestBlock, runTimer);
+						  
 						db.close();
 					});
 				}
@@ -81,16 +81,16 @@ function checkAccount(result){
 	if(chainLogging == true)
 		console.log("checkAccount", result);
  if(result.transactions.length == 0){
-	 setTimeout(getLatestBlock, runTimer);
+	
  	return;
  }else{
  	if(chainLogging == true)
   		console.log("transaction length ", result.transactions.length);
 	if(result.transactions === undefined || result.transactions.length == 0){
-		setTimeout(getLatestBlock, runTimer);
+		
 		return;
 	}
-	 var isEnterMainLoop = false;
+
 
   	for(i = 0;i<result.transactions.length;i++){
   	//check transaction type
@@ -100,7 +100,7 @@ function checkAccount(result){
 		if(trx.actions === null || trx.actions.length == 0 || trx.actions === undefined)
 			continue;
    		for(j=0;j<trx.actions.length;j++){
-			isEnterMainLoop = true;
+
     			if(chainLogging == true)
     				console.log("action length", trx.actions.length);
     			if(trx.actions[j] ===  undefined || trx.actions[j].length == 0)
@@ -141,13 +141,11 @@ function checkAccount(result){
    					account = null;
 					daveDataCalled = true;
  			  	}else{
-					setTimeout(getLatestBlock, runTimer);
+					
 				}//end of if
    			}//end of for, actions
  	}//end of for of transaction
  }//end of else 
-if(isEnterMainLoop == false)
-	setTimeout(getLatestBlock, runTimer);
 }//end of function
 
 
@@ -170,7 +168,7 @@ function saveBlockInfo(idx){
    console.log("getblockfailed");
 
   console.log(err);
-  setTimeout(getLatestBlock, runTimer);
+
  }); // end of getblock
 } //end of function
 
@@ -267,7 +265,7 @@ function deleteReportedAlarm(){
 	});	
 }
                         
-setTimeout(getLatestBlock, runTimer);
+setInterval(getLatestBlock, runTimer);
 setInterval(deleteReportedAlarm, 3600000); //per an hour, delete reported alarm
 
 
