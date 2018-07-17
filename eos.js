@@ -24,7 +24,7 @@ var previousReadBlock = -1;
 function getLatestBlock(){
  eos.getInfo({}).then(result => {
 	 if(isFirstRun == true){
-  		 startIndex = result.last_irreversible_block_num;
+  		 startIndex = result.head_block_num;
 		 idx = startIndex;
 		 isFirstRun = false;
 	 }else{
