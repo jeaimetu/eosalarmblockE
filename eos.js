@@ -22,7 +22,7 @@ var previousReadBlock = -1;
 //set initial block
 function getLatestBlock(){
  eos.getInfo({}).then(result => {
-  startIndex = result.head_block_num;
+  startIndex = result.last_irreversible_block_num;
 
   if(chainLogging == true)
    console.log("getinfo block", previousReadBlock);
