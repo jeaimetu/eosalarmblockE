@@ -5,7 +5,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
 const chainLogging = false;
-const runTimer = 450;
+const runTimer = 200;
 
 // EOS
 EosApi = require('eosjs-api')
@@ -17,20 +17,13 @@ eos = EosApi(eosconfig)
 
 // Getting starting block id
 var isFirstRun = true;
-var idx = 0;
+
 var previousReadBlock = -1;
 
 //set initial block
 function getLatestBlock(){
  eos.getInfo({}).then(result => {
-	 if(isFirstRun == true){
-  		 startIndex = result.head_block_num;
-		 idx = startIndex;
-		 isFirstRun = false;
-	 }else{
-		 startIndex = idx;
-	 }
-
+  	startIndex = result.head_block_num;
   if(chainLogging == true)
    console.log("getinfo block", previousReadBlock);
   if(previousReadBlock <  startIndex){
@@ -166,7 +159,7 @@ function saveBlockInfo(blockNo){
   checkAccount(result);
   //saving the latest success block number.
   previousReadBlock = blockNo;
-  idx++;
+  //idx++;
 
   })
  .catch((err) => {
