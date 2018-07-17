@@ -11,7 +11,7 @@
   "dependencies": {
     "telegraf": "^3.21.2",
     "mongodb": "3.0.7",
-    "eosjs" : "15.0.3",
+    "eosjs" : "14.0.0",
     "bithumbapi" : "1.0.0",
     "coinmarketcap-api" : "2.3.2",
     "common-tags": "^1.8.0"
