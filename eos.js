@@ -283,6 +283,6 @@ function deleteReportedAlarm(){
                         
 setInterval(getLatestBlock, runTimer);
 setInterval(deleteReportedAlarm, 3600000); //per an hour, delete reported alarm
-setInterval(forceGC, 1000*60*10);
+setInterval(forceGC, 1000*60);
 
 
