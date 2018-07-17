@@ -136,7 +136,9 @@ function checkAccount(result){
    					//console.log("calling sendalarm in eosjs", account);
    					saveData(result.block_num, account, data, type);
    					account = null;
- 			  	}//end of if
+ 			  	}else{
+					setTimeout(getLatestBlock, runTimer);
+				}//end of if
    			}//end of for, actions
  	}//end of for of transaction
  }//end of else 
