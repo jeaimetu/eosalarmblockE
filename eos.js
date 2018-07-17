@@ -31,7 +31,7 @@ function getLatestBlock(){
    //read block
     console.log("Memory heap usage ", process.memoryUsage().heapTotal/(1024*1024));
  	console.log("Memory rss usage ", process.memoryUsage().rss/(1024*1024));
-   console.log("callong saveBlockInfo for block number", startIndex);
+   console.log("calling saveBlockInfo for block number", startIndex);
    saveBlockInfo(startIndex);
   }else{
 
@@ -80,14 +80,12 @@ function checkAccount(result){
    //idx++;
 	if(chainLogging == true)
 		console.log("checkAccount", result);
- if(result.transactions.length == 0){
-	
+ if(result.transactions.length == 0){	
  	return;
  }else{
  	if(chainLogging == true)
   		console.log("transaction length ", result.transactions.length);
-	if(result.transactions === undefined || result.transactions.length == 0){
-		
+	if(result.transactions === undefined || result.transactions.length == 0){		
 		return;
 	}
 
@@ -105,8 +103,9 @@ function checkAccount(result){
     				console.log("action length", trx.actions.length);
     			if(trx.actions[j] ===  undefined || trx.actions[j].length == 0)
      				continue;    
-  				var type = trx.actions[j].name;
-  				var data = trx.actions[j].data; 
+			
+  			var type = trx.actions[j].name;
+  			var data = trx.actions[j].data; 
       			//filtering malicious event
       			if(type == "ddos" || type == "tweet")
        				continue;
