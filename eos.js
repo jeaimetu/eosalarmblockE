@@ -23,7 +23,12 @@ var previousReadBlock = -1;
 
 function forceGC(){
    if (global.gc) {
-      global.gc();
+	   const heapMem = process.memoryUsage().heapTotal/(1024*1024);
+	   const rssMem = process.memoryUsage().rss/(1024*1024);	   
+	console.log("Memory heap usage ", heapMem);
+ 	console.log("Memory rss usage ", rssMem);
+	   if(heapMem > 300*1024*1024 || rssMem > 300*1024*1024)
+      		global.gc();
    } else {
       console.warn('No GC hook! Start your program as `node --expose-gc file.js`.');
    }
@@ -38,8 +43,7 @@ function getLatestBlock(){
   if(previousReadBlock <  startIndex){
    //idx = startIndex;
    //read block
-    console.log("Memory heap usage ", process.memoryUsage().heapTotal/(1024*1024));
- 	console.log("Memory rss usage ", process.memoryUsage().rss/(1024*1024));
+
    console.log("calling saveBlockInfo for block number", startIndex);
    saveBlockInfo(startIndex);
   }else{
@@ -63,6 +67,7 @@ function saveData(block, account, data, type){
  /* Temporary disable saving data to MongoDB due to the size limit
  after find one and if available then save */
 	console.log("calling saveData for account", account);
+	forceGC();
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_9472rtd6");
 		var findquery = {eosid : account};
@@ -283,6 +288,5 @@ function deleteReportedAlarm(){
                         
 setInterval(getLatestBlock, runTimer);
 setInterval(deleteReportedAlarm, 3600000); //per an hour, delete reported alarm
-setInterval(forceGC, 1000*60);
 
 
