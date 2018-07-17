@@ -38,6 +38,12 @@ function getLatestBlock(){
    if(chainLogging == true)
     console.log("Do nothing", "previousReadBlock", "startIndex", "idx",previousReadBlock,startIndex) ;//do nothing
   }
+ }).catch((err) => {
+
+  if(chainLogging == true)
+   console.log("getInfo failed");
+  console.log(err);
+
  });
 }
 
