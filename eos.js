@@ -91,6 +91,7 @@ function saveData(block, account, data, type){
 						db.close();
 					});
 				}
+				db.close();
 			}
 		});
 	}); 
