@@ -21,6 +21,14 @@ var isFirstRun = true;
 
 var previousReadBlock = -1;
 
+function forceGC()
+   if (global.gc) {
+      global.gc();
+   } else {
+      console.warn('No GC hook! Start your program as `node --expose-gc file.js`.');
+   }
+}
+
 //set initial block
 function getLatestBlock(){
  eos.getInfo({}).then(result => {
@@ -275,5 +283,6 @@ function deleteReportedAlarm(){
                         
 setInterval(getLatestBlock, runTimer);
 setInterval(deleteReportedAlarm, 3600000); //per an hour, delete reported alarm
+setInterval(forceGC, 1000*60*10);
 
 
