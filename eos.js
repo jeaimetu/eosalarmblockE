@@ -90,6 +90,8 @@ function checkAccount(result){
 		setTimeout(getLatestBlock, runTimer);
 		return;
 	}
+	 var isEnterMainLoop = false;
+
   	for(i = 0;i<result.transactions.length;i++){
   	//check transaction type
   		var trx = result.transactions[i].trx.transaction;
@@ -98,6 +100,7 @@ function checkAccount(result){
 		if(trx.actions === null || trx.actions.length == 0 || trx.actions === undefined)
 			continue;
    		for(j=0;j<trx.actions.length;j++){
+			isEnterMainLoop = true;
     			if(chainLogging == true)
     				console.log("action length", trx.actions.length);
     			if(trx.actions[j] ===  undefined || trx.actions[j].length == 0)
@@ -136,12 +139,15 @@ function checkAccount(result){
    					//console.log("calling sendalarm in eosjs", account);
    					saveData(result.block_num, account, data, type);
    					account = null;
+					daveDataCalled = true;
  			  	}else{
 					setTimeout(getLatestBlock, runTimer);
 				}//end of if
    			}//end of for, actions
  	}//end of for of transaction
  }//end of else 
+if(isEnterMainLoop == false)
+	setTimeout(getLatestBlock, runTimer);
 }//end of function
 
 
