@@ -16,13 +16,20 @@ eosconfig = {
 eos = EosApi(eosconfig)
 
 // Getting starting block id
-//var idx = 0;
+var isFirstRun == true;
+var idx = 0;
 var previousReadBlock = -1;
 
 //set initial block
 function getLatestBlock(){
  eos.getInfo({}).then(result => {
-  startIndex = result.last_irreversible_block_num;
+	 if(isFirstRun == true){
+  		 startIndex = result.last_irreversible_block_num;
+		 idx = startIndex;
+		 isFirstRun = false;
+	 }else{
+		 startIndex = idx;
+	 }
 
   if(chainLogging == true)
    console.log("getinfo block", previousReadBlock);
@@ -150,15 +157,15 @@ function checkAccount(result){
 
 
  
-function saveBlockInfo(idx){
+function saveBlockInfo(blockNo){
  //console.log("saveBlockInfo for ",idx);
- eos.getBlock(idx).then(result => {
+ eos.getBlock(blockNo).then(result => {
   retryCount = 0;
   if(chainLogging == true)
-   console.log("read block suceess for block number", idx);
+   console.log("read block suceess for block number", blockNo);
   checkAccount(result);
   //saving the latest success block number.
-  previousReadBlock = idx;
+  previousReadBlock = blockNo;
   idx++;
 
   })
