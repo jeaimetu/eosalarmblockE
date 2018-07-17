@@ -96,14 +96,16 @@ function checkAccount(result){
 		return;
 	}
 
-
+	var trx;
   	for(i = 0;i<result.transactions.length;i++){
   	//check transaction type
-  		var trx = result.transactions[i].trx.transaction;
+  		trx = result.transactions[i].trx.transaction;
 		if(trx === undefined)
 			continue;
 		if(trx.actions === null || trx.actions.length == 0 || trx.actions === undefined)
 			continue;
+		
+		var type, data;
    		for(j=0;j<trx.actions.length;j++){
 
     			if(chainLogging == true)
@@ -111,8 +113,8 @@ function checkAccount(result){
     			if(trx.actions[j] ===  undefined || trx.actions[j].length == 0)
      				continue;    
 			
-  			var type = trx.actions[j].name;
-  			var data = trx.actions[j].data; 
+  			type = trx.actions[j].name;
+  			data = trx.actions[j].data; 
       			//filtering malicious event
       			if(type == "ddos" || type == "tweet")
        				continue;
