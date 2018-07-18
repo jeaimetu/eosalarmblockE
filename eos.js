@@ -133,8 +133,10 @@ function checkAccount(result){
       			if(type == "ddos" || type == "tweet")
        				continue;
   				var account = null;
+			var accountFrom = null;
   				if(type == "transfer" || type == "issue" ){
   					account = data.to;
+					accountFrom = data.from;
   				}else if(type == "newaccount"){
   					account = data.creator;
   				}else if(type == "voteproducer"){
@@ -160,8 +162,10 @@ function checkAccount(result){
   				if(account != null && type != "ddos" && type != "tweet"){     
    					//console.log("calling sendalarm in eosjs", account);
    					saveData(result.block_num, account, data, type);
-   					account = null;
-					daveDataCalled = true;
+					account = null;
+					if(accountFrom != null){
+						saveData(result.block_num, accountFrom, data, type);
+					}
  			  	}else{
 					
 				}//end of if
@@ -259,7 +263,7 @@ function formatData(data, type){
   }else if(type == "buyram" || type == "buyrambytes"){
    msg = "You buy RAM";
    msg += "\n";
-   msg += "Amount " + data.bytes + " to " + data.receiver;
+   msg += "Amount " + data.bytes + "bytes" + " to " + data.receiver;
   }else{
    //console.log("need to be implemented");
    msg = "This event will be supported in near future";
