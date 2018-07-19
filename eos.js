@@ -237,7 +237,8 @@ function formatData(data, type){
   }else if(type == "issue"){
    msg = "Issue Event";
    msg += "\n";
-   msg += "Quantity" + data.quantity;
+   msg += "Quantity : " + data.quantity;
+	  msg += "\n";
    msg += "Memo : " + data.memo
   }else if(type == "bidname"){
    msg = "Account Bidding Event";
