@@ -61,6 +61,7 @@ function getLatestBlock(){
 }
 
 
+
 function saveData(block, account, data, type){ 
   //var fData = formatData(data, type);
   //botClient.sendAlarm(account, fData);
@@ -69,7 +70,7 @@ function saveData(block, account, data, type){
 	console.log("calling saveData for account", account);
 	forceGC();
 	MongoClient.connect(url, function(err, db) {
-		var dbo = db.db("heroku_9472rtd6");
+		var dbo = db.db("heroku_6wpccsrg");
 		var findquery = {eosid : account};
 		dbo.collection("customers").find(findquery).toArray(function(err, result){
 			if(result == null){
@@ -81,8 +82,11 @@ function saveData(block, account, data, type){
 					//insert data
 					var fData = formatData(data, type);
 					//query all chat ids related to this
-					if(result[i] === undefined)
+					if(typeof  result[i] === 'undefined'){
+						console.log("result is undefined", result[i]);
 						continue;
+					}
+					console.log("calling insertone", account);
 					var myobj = { chatid : result[i].chatid, block : block, account : account, data : fData, report : false };
 					dbo.collection("alarm").insertOne(myobj, function(err, res){
 						if (err) throw err;
@@ -91,7 +95,7 @@ function saveData(block, account, data, type){
 						db.close();
 					});
 				}
-				db.close();
+				db.close();//all continue case;
 			}
 		});
 	}); 
@@ -106,7 +110,7 @@ function checkAccount(result){
  }else{
  	if(chainLogging == true)
   		console.log("transaction length ", result.transactions.length);
-	if(result.transactions === undefined || result.transactions.length == 0){		
+	if(typeof result.transactions === 'undefined' || result.transactions.length == 0){		
 		return;
 	}
 
@@ -114,9 +118,9 @@ function checkAccount(result){
   	for(i = 0;i<result.transactions.length;i++){
   	//check transaction type
   		trx = result.transactions[i].trx.transaction;
-		if(trx === undefined)
+		if(typeof trx === 'undefined')
 			continue;
-		if(trx.actions === null || trx.actions.length == 0 || trx.actions === undefined)
+		if(trx.actions === null || trx.actions.length == 0 || typeof trx.actions === 'undefined')
 			continue;
 		
 		var type, data;
@@ -124,7 +128,7 @@ function checkAccount(result){
 
     			if(chainLogging == true)
     				console.log("action length", trx.actions.length);
-    			if(trx.actions[j] ===  undefined || trx.actions[j].length == 0)
+    			if(typeof trx.actions[j] ===  'undefined' || trx.actions[j].length == 0)
      				continue;    
 			
   			type = trx.actions[j].name;
