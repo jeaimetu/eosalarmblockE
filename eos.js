@@ -70,7 +70,7 @@ function saveData(block, account, data, type){
 	console.log("calling saveData for account", account);
 	forceGC();
 	MongoClient.connect(url, function(err, db) {
-		var dbo = db.db("heroku_6wpccsrg");
+		var dbo = db.db("heroku_9472rtd6");
 		var findquery = {eosid : account};
 		dbo.collection("customers").find(findquery).toArray(function(err, result){
 			if(result == null){
